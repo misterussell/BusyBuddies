@@ -2,10 +2,14 @@ import AWS from 'aws-sdk';
 import AWSMock from 'aws-sdk-mock';
 import sinon from 'sinon';
 
-AWSMock.setSDKInstance(AWS);
-
 import User from '../../../models/User';
 import Store from '../../../Store';
+
+AWSMock.setSDKInstance(AWS);
+
+afterEach(() => {
+  AWSMock.restore();
+});
 
 describe('the User class', () => {
   it('should be unauthenticated by default', () => {
