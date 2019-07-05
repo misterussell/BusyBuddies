@@ -1,13 +1,20 @@
 import {
   CognitoUser,
+  CognitoUserPool,
   CognitoUserAttribute,
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
 
-import Store from '../Store';
+import cognito from '../CognitoConfig';
 
 export default class User {
-  isAuthenticated: false;
+  constructor(...args) {
+    this.isAuthenticated = false;
+    this.userPool = new CognitoUserPool({
+      UserPoolId: cognito.UserPoolId,
+      ClientId: cognito.ClientId
+    });
+  }
 
   signUp(email, password) {
     const attributeList = [
@@ -17,7 +24,7 @@ export default class User {
       })
     ];
     return new Promise((resolve, reject) => {
-      Store.userPool.signUp(email, password, attributeList, null, (err,result) => {
+      this.userPool.signUp(email, password, attributeList, null, (err,result) => {
         if (err) {
           reject(err);
         } else resolve(result.user);
@@ -25,5 +32,4 @@ export default class User {
     });
   }
 
-  
 }
