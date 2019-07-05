@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class SignUp extends Component {
   constructor(props) {
@@ -56,4 +57,9 @@ class SignUp extends Component {
   }
 
 }
+
+SignUp.propTypes = {
+  store: PropTypes.object,
+};
+
 export default SignUp;
