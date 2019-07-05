@@ -5,14 +5,14 @@ import {
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
 
-import cognito from '../CognitoConfig';
+import cognitoConfig from '../CognitoConfig';
 
 export default class User {
-  constructor(...args) {
+  constructor() {
     this.isAuthenticated = false;
     this.userPool = new CognitoUserPool({
-      UserPoolId: cognito.UserPoolId,
-      ClientId: cognito.ClientId
+      UserPoolId: cognitoConfig.UserPoolId,
+      ClientId: cognitoConfig.ClientId
     });
   }
 

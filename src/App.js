@@ -30,7 +30,7 @@ function App() {
 
       <hr />
 
-      <Routes store={Store}/>
+      <Routes store={new Store()}/>
     </Router>
   );
 }

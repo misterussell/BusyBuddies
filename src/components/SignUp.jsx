@@ -59,7 +59,7 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  store: PropTypes.object,
+  // store: PropTypes.object,
 };
 
 export default SignUp;

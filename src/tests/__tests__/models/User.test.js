@@ -1,7 +1,9 @@
-import React from 'react';
 import User from '../../../models/User';
+import Store from '../../../Store';
 
-it('the user class instantiates a new user', () => {
-  const user = new User();
-
+describe('the User class', () => {
+  it('should be unauthenticated by default', () => {
+    const user = new User();
+    expect(user.isAuthenticated).toBe(false);
+  });
 });
