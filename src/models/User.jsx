@@ -16,8 +16,7 @@ export default class User {
     });
   }
 
-  signUp(cognitoRequest, email, password) {
-    cognitoRequest();
+  signUp(email, password) {
     const attributeList = [
       new CognitoUserAttribute({
         Name: 'email',
@@ -25,11 +24,11 @@ export default class User {
       })
     ];
     return new Promise((resolve, reject) => {
-      this.userPool.signUp(email, password, attributeList, null, (err, result) => {
-        if (err) {
-          reject(err);
-        } else resolve(result.user);
-      });
+        this.userPool.signUp(email, password, attributeList, null, (err, result) => {
+          if (err) {
+            reject(err);
+          } else resolve(result.user);
+        });
     });
   }
 

@@ -20,10 +20,10 @@ function App() {
             <Link to="/myaccount">My Account</Link>
           </li>
           <li>
-            <Link to="signup">Sign Up</Link>
+            <Link to="/signup">Sign Up</Link>
           </li>
           <li>
-            <Link to="sign-in">Sign In</Link>
+            <Link to="/sign-in">Sign In</Link>
           </li>
         </ul>
       </div>
