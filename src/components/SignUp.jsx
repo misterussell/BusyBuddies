@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 function SignUp(props) {
   const [email, setEmail] = useState('');
@@ -84,17 +83,14 @@ function SignUp(props) {
     });
   }
 
-  // handleConfirm = (e) => {
-  //   e.preventDefault();
-  //   const email = this.state.email.trim();
-  //   const code = this.state.confirmationCode.trim();
-  //   // confirm account
-  // }
+  function handleConfirm(e) {
+    e.preventDefault();
+    props.user.confirm('max@misterussell.com', confirmationCode)
+  }
 
-}
-
-SignUp.propTypes = {
-  store: PropTypes.object,
+  function handleConfirmationCode(e) {
+    setConfirmationCode(e.target.value);
+  }
 };
 
 export default SignUp;
