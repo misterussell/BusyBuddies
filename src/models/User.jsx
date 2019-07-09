@@ -23,12 +23,19 @@ export default class User {
         value: email,
       })
     ];
+
     return new Promise((resolve, reject) => {
+      if (email && password) {
         this.userPool.signUp(email, password, attributeList, null, (err, result) => {
           if (err) {
             reject(err);
           } else resolve(result.user);
         });
+      } else {
+        reject({
+          error: 'User not signed up.'
+        });
+      }
     });
   }
 

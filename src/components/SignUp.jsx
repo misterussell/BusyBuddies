@@ -1,12 +1,37 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function SignUp() {
+function SignUp(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [confirm, setConfirm] = useState(null);
   const [confirmationCode, setConfirmationCode] = useState('');
+
+
+  const errorDiv = error
+    ? (
+      <div className="sign-up-error">
+        <p>{error}</p>
+      </div>
+    )
+    : null;
+
+  const confirmDiv = confirm
+    ? (
+      <div className="confirmation">
+        <p>Please check your email for your confirmation code.</p>
+        <p>Code:</p>
+        <input
+          value={confirmationCode}
+          onChange={handleConfirmationCode}
+          placeholder="code"
+          label="code"
+        />
+        <button onClick={handleConfirm}>confirm</button>
+      </div>
+    )
+    : null;
 
   return (
     <div className="sign-up">
@@ -30,6 +55,12 @@ function SignUp() {
           label="submit"
           >sign up</button>
       </form>
+      {
+        errorDiv
+      }
+      {
+        confirmDiv
+      }
     </div>
   );
 
@@ -43,9 +74,14 @@ function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    //   const email = this.state.email.trim();
-    //   const password = this.state.password.trim();
-    //   // sign up account
+    // props.user
+    props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
+      console.log('no error')
+      setConfirm(true);
+      setError(null);
+    }).catch(error => {
+      setError(error.message);
+    });
   }
 
   // handleConfirm = (e) => {

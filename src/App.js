@@ -23,7 +23,7 @@ function App() {
             <Link to="/signup">Sign Up</Link>
           </li>
           <li>
-            <Link to="/sign-in">Sign In</Link>
+            <Link to="/signin">Sign In</Link>
           </li>
         </ul>
       </div>

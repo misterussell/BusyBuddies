@@ -13,8 +13,8 @@ const Routes = (props) => {
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/myaccount" render={() => <MyAccount />} />
-      <Route path="/signup" render={() => <SignUp store={props.store} />} />
-      <Route path="/signin" render={() => <SignIn store={props.store} />} />
+      <Route path="/signup" render={() => <SignUp user={props.store.user} />} />
+      <Route path="/signin" render={() => <SignIn user={props.store.user} />} />
     </Switch>
   );
 };
