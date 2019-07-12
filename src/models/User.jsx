@@ -33,7 +33,7 @@ export default class User {
         });
       } else {
         reject({
-          error: 'User not signed up.'
+          error: 'User not signed up. Email and password required.'
         });
       };
     });
@@ -54,9 +54,38 @@ export default class User {
         });
       } else {
         reject({
-          error: 'Email and code required.'
+          error: 'User not confirmed. Email and code required.'
         });
       };
+    });
+  }
+
+  signIn(email, password) {
+    const authData = {
+      Username: email,
+      Password: password,
+    };
+    const cognitoAuthDetails = new AuthenticationDetails(authData);
+    const user = {
+      Username: email,
+      Pool: this.userPool,
+    };
+    const cognitoUser = new CognitoUser(user);
+    return new Promise((resolve, reject) => {
+      if (email && password) {
+        cognitoUser.authenticateUser(cognitoAuthDetails, {
+          onSuccess: function(result) {
+            resolve(result.getAccessToken().getJwtToken());
+          },
+          onFailure: function(error) {
+            reject(error);
+          },
+        });
+      } else {
+        reject({
+          error: 'User not signed in. Email and password required.'
+        });
+      }
     });
   }
 

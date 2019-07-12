@@ -4,9 +4,8 @@ function SignUp(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [confirm, setConfirm] = useState(null);
+  const [awaitConfirm, setAwaitConfirm] = useState(null);
   const [confirmationCode, setConfirmationCode] = useState('');
-
 
   const errorDiv = error
     ? (
@@ -16,7 +15,7 @@ function SignUp(props) {
     )
     : null;
 
-  const confirmDiv = confirm
+  const confirmDiv = awaitConfirm
     ? (
       <div className="confirmation">
         <p>Please check your email for your confirmation code.</p>
@@ -32,6 +31,20 @@ function SignUp(props) {
     )
     : null;
 
+    const passwordField = awaitConfirm
+      ? null
+      : (
+        <div className="password">
+          <p>password:</p>
+          <input
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="password"
+            label="password"
+          />
+        </div>
+      );
+
   return (
     <div className="sign-up">
       <form>
@@ -42,17 +55,14 @@ function SignUp(props) {
           placeholder="email"
           label="email"
         />
-        <p>password:</p>
-        <input
-          value={password}
-          onChange={handlePasswordChange}
-          placeholder="password"
-          label="password"
-        />
+        {
+          passwordField
+        }
         <button
           onClick={handleSubmit}
           label="submit"
           >sign up</button>
+          <button onClick={handleExistingCode}>I already have a code</button>
       </form>
       {
         errorDiv
@@ -71,16 +81,22 @@ function SignUp(props) {
     setPassword(e.target.value);
   }
 
+
   function handleSubmit(e) {
     e.preventDefault();
     // props.user
     props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
-      console.log('no error')
-      setConfirm(true);
+      console.log('no error signing up');
+      setAwaitConfirm(true);
       setError(null);
     }).catch(error => {
       setError(error.message);
     });
+  }
+
+  function handleExistingCode(e) {
+    e.preventDefault();
+    setAwaitConfirm(true)
   }
 
   function handleConfirm(e) {

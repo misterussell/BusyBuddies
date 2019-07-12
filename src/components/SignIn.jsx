@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 
-function SignIn() {
+function SignIn(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const errorDiv = error
+    ? (
+      <div className="sign-in-error">
+        { error }
+      </div>
+    )
+    : null;
 
   return (
     <div className="sign-in">
@@ -26,6 +35,9 @@ function SignIn() {
           label="submit"
           >sign in</button>
       </form>
+      {
+        errorDiv
+      }
     </div>
   );
 
@@ -39,6 +51,11 @@ function SignIn() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    props.user.signIn('max@misterussell.com', 'false').then(response => {
+      console.log('no error signing in');
+    }).catch(error => {
+      setError(error.message);
+    });
   }
 
 }

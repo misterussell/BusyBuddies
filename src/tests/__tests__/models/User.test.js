@@ -42,7 +42,7 @@ describe('the User class', () => {
     */
     const user = new User();
     expect(user.signUp(false)).rejects.toEqual({
-      error: 'User not signed up.'
+      error: 'User not signed up. Email and password required.'
     });
   });
 
@@ -59,7 +59,35 @@ describe('the User class', () => {
   it('should return an error if the confirm method receives invalid args', () => {
     const user = new User();
     expect(user.confirm(false)).rejects.toEqual({
-      error: 'Email and code required.'
+      error: 'User not confirmed. Email and code required.'
+    });
+  });
+
+  it('should have a signIn method that if not rejected signs in the new user and adds the authenticated user details to local storage', () => {
+    /*
+      the signUp method utilizes the Cognito .authenticateUser method which requires
+      - a cognito user object with the username and userPool details
+      - an cognito AuthenticationDeatils objects containing keys for Username
+      and Password where those credentials match what is saved on the user's account
+      in the cognito user pool
+      - an object with onSuccess and onFailure keys which return the result or errors
+      from the cognito .authenticateUser call
+    */
+  });
+
+  it('should return an error if the signIn method receive invalid args', () => {
+    /*
+      if the incorrect number of arguments are passed to this function a custom
+      error is returned, otherwise the entire cognito error object is returned to
+      the consumer. the cognito response is an object with the following properties:
+        {
+          message: str,
+          __type: str
+        }
+    */
+    const user = new User();
+    expect(user.signIn(false)).rejects.toEqual({
+      error: 'User not signed in. Email and password required.'
     });
   });
 
