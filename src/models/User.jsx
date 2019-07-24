@@ -16,6 +16,10 @@ export default class User {
     });
   }
 
+  setAuthenticated() {
+    this.isAuthenticated = true;
+  }
+
   signUp(email, password) {
     const attributeList = [
       new CognitoUserAttribute({
@@ -86,6 +90,28 @@ export default class User {
           error: 'User not signed in. Email and password required.'
         });
       }
+    });
+  }
+
+  signOut() {
+    const currentUser = this.userPool.getCurrentUser();
+    const signOut = (user) => user ? currentUser.signOut() : null;
+    return signOut(currentUser);
+  }
+
+  getSession() {
+    const user = this.userPool.getCurrentUser();
+    return new Promise((resolve, reject) => {
+      if (user) {
+        user.getSession((error, result) => {
+          if (error) reject(error);
+          if (result) {
+            resolve(result.getAccessToken().getJwtToken());
+          };
+        });
+      } else {
+        reject('No user found.');
+      };
     });
   }
 

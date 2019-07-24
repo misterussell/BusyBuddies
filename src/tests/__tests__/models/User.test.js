@@ -91,4 +91,22 @@ describe('the User class', () => {
     });
   });
 
+  it('should have a signOut method that signs out the active user', () => {
+    /*
+      the signOut method utilizes the Cognito .getCurrentUser() method to validate
+      the current Cognito User logged in via the user object.
+      the scoped signout function within the method confirms whether there is an
+      active user registered to the userPool and if valid uses the Cognito
+      .signOut() method to clear there credentials from the browser cache and
+      log them out of Cognito.
+    */
+  });
+
+  it('should have a getSession method that validates the current user based on session information stored in the browser', () => {
+    /*
+      need docs
+    */
+  });
+
+
 });

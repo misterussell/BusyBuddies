@@ -51,7 +51,7 @@ function SignIn(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.user.signIn('max@misterussell.com', 'false').then(response => {
+    props.user.signIn('max@misterussell.com', 'NewUser1!').then(response => {
       console.log('no error signing in');
     }).catch(error => {
       setError(error.message);
