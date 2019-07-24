@@ -1,7 +1,17 @@
 import sinon from 'sinon';
+// import AWS from 'aws-sdk';
+// import AWSMock from 'aws-sdk-mock';
 
 import User from '../../../models/User';
 import Store from '../../../Store';
+//
+// beforeEach(() => {
+//   AWSMock.setSDKInstance(AWS);
+// })
+//
+// afterAll(() => {
+//   AWSMock.restore();
+// });
 
 describe('the User class', () => {
   const email = 'max@misterussell.com'
@@ -31,6 +41,7 @@ describe('the User class', () => {
         by the Promise being used to pass data back to the consumer
       - also requires all userPool information including clientID
     */
+    // AWSMock.mock('CognitoIdentityServiceProvider.CognitoUserPool', 'signUp', function(params, cb) { cb(null) });
     const user = new User();
     user.signUp(email, password).then(data => expect(data).toEqual(response))
                                 .catch(err => err);

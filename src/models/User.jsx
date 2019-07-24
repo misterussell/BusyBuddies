@@ -16,6 +16,8 @@ export default class User {
     });
   }
 
+  isAuthenticated = null;
+
   setAuthenticated() {
     this.isAuthenticated = true;
   }
@@ -107,10 +109,11 @@ export default class User {
           if (error) reject(error);
           if (result) {
             resolve(result.getAccessToken().getJwtToken());
+            this.setAuthenticated();
           };
         });
       } else {
-        reject('No user found.');
+        reject('No user session found.');
       };
     });
   }
