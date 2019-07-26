@@ -6,6 +6,7 @@ import {
   MyAccount,
   SignUp,
   SignIn,
+  SignOut
 } from './components';
 
 const Routes = (props) => {
@@ -15,6 +16,7 @@ const Routes = (props) => {
       <Route path="/myaccount" render={() => <MyAccount />} />
       <Route path="/signup" render={() => <SignUp user={props.store.user} />} />
       <Route path="/signin" render={() => <SignIn user={props.store.user} />} />
+      <Route path="/signout" render={() => <SignOut user={props.store.user} />} />
     </Switch>
   );
 };

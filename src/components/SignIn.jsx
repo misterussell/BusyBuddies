@@ -53,6 +53,7 @@ function SignIn(props) {
     e.preventDefault();
     props.user.signIn('max@misterussell.com', 'NewUser1!').then(response => {
       console.log('no error signing in');
+      props.user.setAuthenticated();
     }).catch(error => {
       setError(error.message);
     });

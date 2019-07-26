@@ -98,6 +98,7 @@ export default class User {
   signOut() {
     const currentUser = this.userPool.getCurrentUser();
     const signOut = (user) => user ? currentUser.signOut() : null;
+    this.authenticated = false;
     return signOut(currentUser);
   }
 

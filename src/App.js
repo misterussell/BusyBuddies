@@ -11,7 +11,7 @@ import './App.css';
 const store = new Store();
 store.user.getSession().then(result => {
   console.log(store.user);
-  console.log(result);
+  console.log(result)
 }).catch(error => console.log(error));
 
 function App() {
