@@ -4,7 +4,7 @@ function SignOut(props) {
   props.user.signOut();
   return (
     <div className="sign-out">
-      You have been signed out. 
+      You have been signed out.
     </div>
   );
 };
