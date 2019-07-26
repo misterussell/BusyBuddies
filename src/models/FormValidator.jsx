@@ -64,6 +64,26 @@ export default class FormValidator {
     return this.validations;
   }
 
+  matchPasswords(password, confirmPassword) {
+    if (validator.equals(password, confirmPassword)) {
+      return {
+        password: {
+          isInvalid: false,
+          message: '',
+        },
+        isValid: true,
+      };
+    } else {
+      return {
+        password: {
+          isInvalid: true,
+          message: 'Passwords do not match.',
+        },
+        isValid: false,
+      }
+    }
+  }
+
   sanitizeEmail(email) {
     return validator.normalizeEmail(email, [{
       gmail_lowercase: true,

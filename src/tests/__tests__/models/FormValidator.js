@@ -48,7 +48,7 @@ describe('the FormValidator class', () => {
         field: 'email',
         method: validator.isEmpty,
         validWhen: false,
-        message: 'Please provide an email address.'
+        message: 'Please provide an email address.',
       }
     ]);
     const negativeTest = { email: '' };
@@ -75,14 +75,14 @@ describe('the FormValidator class', () => {
         field: 'email',
         method: validator.isEmail,
         validWhen: true,
-        message: 'Please enter a valid email address.'
+        message: 'Please enter a valid email address.',
       }
     ]);
     const negativeTest = { email: 'fooBar' };
     expect(formValidator.validate(negativeTest)).toEqual({
       email: {
         isInvalid: true,
-        message: 'Please enter a valid email address.'
+        message: 'Please enter a valid email address.',
       },
       isValid: false,
     });
@@ -93,6 +93,27 @@ describe('the FormValidator class', () => {
         message: '',
       },
       isValid: true,
+    });
+  });
+
+  it('should validate that two password fields match', () => {
+    const password1 = 'P@ssword';
+    const password2 = 'P@ssword';
+    const negativePassword = 'FooBar';
+    const formValidator = new FormValidator(['foo']);
+    expect(formValidator.matchPasswords(password1, password2)).toEqual({
+      password: {
+        isInvalid: false,
+        message: '',
+      },
+      isValid: true,
+    });
+    expect(formValidator.matchPasswords(password1, negativePassword)).toEqual({
+      password: {
+        isInvalid: true,
+        message: 'Passwords do not match.',
+      },
+      isValid: false,
     });
   });
 
