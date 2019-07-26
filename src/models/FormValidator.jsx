@@ -1,6 +1,9 @@
 import validator from 'validator';
 
 export default class FormValidator {
+  /*
+    construct the instance with a set of rules that the form must meet
+  */
   constructor(validations) {
     // validations: an array of form specific validation rules
     if (Array.isArray(validations)) {
@@ -8,8 +11,17 @@ export default class FormValidator {
     } else throw new Error('FormValidator can only be constructed with an array of validation rules.')
   }
 
-  // iterate through the validation rules and construct a validation object
-  // return the the validation object
+  /*
+    iterate through the validation rules and construct a validation object
+    return the the validation object:
+    {
+      email: {
+        isInvalid: true,
+        message: 'Please provide an email address.'
+      },
+      isValid: false,
+    }
+  */
   validate(state) {
     // assume initial state is valid
     const validation = this.isValid();
@@ -50,5 +62,11 @@ export default class FormValidator {
 
   getValidations() {
     return this.validations;
+  }
+
+  sanitizeEmail(email) {
+    return validator.normalizeEmail(email, [{
+      gmail_lowercase: true,
+    }]);
   }
 }

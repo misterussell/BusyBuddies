@@ -51,5 +51,56 @@ describe('the FormValidator class', () => {
         message: 'Please provide an email address.'
       }
     ]);
-  })
+    const negativeTest = { email: '' };
+    expect(formValidator.validate(negativeTest)).toEqual({
+      email: {
+        isInvalid: true,
+        message: 'Please provide an email address.'
+      },
+      isValid: false,
+    });
+    const positiveTest = { email: 'foo@bar.com' };
+    expect(formValidator.validate(positiveTest)).toEqual({
+      email: {
+        isInvalid: false,
+        message: '',
+      },
+      isValid: true,
+    });
+  });
+
+  it('should validate that an email field has a valid email', () => {
+    const formValidator = new FormValidator([
+      {
+        field: 'email',
+        method: validator.isEmail,
+        validWhen: true,
+        message: 'Please enter a valid email address.'
+      }
+    ]);
+    const negativeTest = { email: 'fooBar' };
+    expect(formValidator.validate(negativeTest)).toEqual({
+      email: {
+        isInvalid: true,
+        message: 'Please enter a valid email address.'
+      },
+      isValid: false,
+    });
+    const positiveTest = { email: 'foo@bar.com' };
+    expect(formValidator.validate(positiveTest)).toEqual({
+      email: {
+        isInvalid: false,
+        message: '',
+      },
+      isValid: true,
+    });
+  });
+
+  it('should sanitize email addresses', () => {
+    const email = 'FooBar@LIVE.com';
+    const gmail = 'FOOBAR@gmail.com';
+    const formValidator = new FormValidator(['rule 1', 'rule 2']);
+    expect(formValidator.sanitizeEmail(email)).toEqual('foobar@live.com');
+    expect(formValidator.sanitizeEmail(gmail)).toEqual('foobar@gmail.com');
+  });
 });
