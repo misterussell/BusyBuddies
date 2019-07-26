@@ -7,6 +7,26 @@ function SignUp(props) {
   const [error, setError] = useState(null);
   const [awaitConfirm, setAwaitConfirm] = useState(null);
   const [confirmationCode, setConfirmationCode] = useState('');
+  const formValidator = new FormValidator([
+    {
+      field: 'email',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Please provide an email address.',
+    },
+    {
+      field: 'email',
+      method: 'isEmail',
+      validWhen: true,
+      message: 'Please enter a valid email address.',
+    },
+    {
+      field: 'password',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Please enter a password'
+    }
+  ]);
 
   const errorDiv = error
     ? (
@@ -85,17 +105,19 @@ function SignUp(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // const validator = new FormValidator([...rules]);
-    // if (validator.validate(state)) {
-    //   do stuff
-    // } else show errors
-    props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
-      console.log('no error signing up');
-      setAwaitConfirm(true);
-      setError(null);
-    }).catch(error => {
-      setError(error.message);
-    });
+    const formState = { email, password };
+    const validation = formValidator(formState);
+    if (validation.isValid) {
+      props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
+        console.log('no error signing up');
+        setAwaitConfirm(true);
+        setError(null);
+      }).catch(error => {
+        setError(error.message);
+      });
+    } else {
+      // show the validation errors
+    }
   }
 
   function handleExistingCode(e) {
