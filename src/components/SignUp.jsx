@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FormValidator from '../models/FormValidator';
 
 function SignUp(props) {
   const [email, setEmail] = useState('');
@@ -84,7 +85,10 @@ function SignUp(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // props.user
+    // const validator = new FormValidator([...rules]);
+    // if (validator.validate(state)) {
+    //   do stuff
+    // } else show errors
     props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
       console.log('no error signing up');
       setAwaitConfirm(true);
