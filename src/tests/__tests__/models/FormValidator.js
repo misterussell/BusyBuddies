@@ -117,6 +117,55 @@ describe('the FormValidator class', () => {
     });
   });
 
+  it('should list validity for multiple fields in the same validation object', () => {
+    const email = 'foo@bar.com';
+    const password  = 'P@ssword';
+    const formValidator = new FormValidator([
+      {
+        field: 'email',
+        method: validator.isEmpty,
+        validWhen: false,
+        message: 'Please provide an email address.',
+      },
+      {
+        field: 'email',
+        method: validator.isEmail,
+        validWhen: true,
+        message: 'Please enter a valid email address.',
+      },
+      {
+        field: 'password',
+        method: 'isEmpty',
+        validWhen: false,
+        message: 'Please enter a password.',
+      },
+    ]);
+    const positiveFormState = { email, password };
+    const positiveValidation = formValidator.validate(positiveFormState);
+    expect(positiveValidation.isValid).toBe(true);
+    const negativeFormState = { email: 'foo', password: '' };
+    const negativeValidation = formValidator.validate(negativeFormState);
+    expect(negativeValidation).toEqual({
+      email: {
+        isInvalid: true,
+        message: 'Please enter a valid email address.',
+      },
+      isValid: false,
+      password: {
+        isInvalid: true,
+        message: 'Please enter a password.',
+      },
+    });
+    expect(negativeValidation.email).toEqual({
+      isInvalid: true,
+      message: 'Please enter a valid email address.',
+    });
+    expect(negativeValidation.password).toEqual({
+      isInvalid: true,
+      message: 'Please enter a password.',
+    });
+  });
+
   it('should sanitize email addresses', () => {
     const email = 'FooBar@LIVE.com';
     const gmail = 'FOOBAR@gmail.com';

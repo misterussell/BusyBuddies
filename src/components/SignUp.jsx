@@ -109,14 +109,13 @@ function SignUp(props) {
     const validation = formValidator(formState);
     if (validation.isValid) {
       props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
-        console.log('no error signing up');
         setAwaitConfirm(true);
         setError(null);
       }).catch(error => {
         setError(error.message);
       });
     } else {
-      // show the validation errors
+      // render the validation errors
     }
   }
 

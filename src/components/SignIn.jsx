@@ -1,9 +1,31 @@
 import React, { useState } from 'react';
+import FormValidator from '../models/FormValidator';
 
 function SignIn(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const formValidator = new FormValidator([
+    {
+      field: 'email',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Please provide an email address.',
+    },
+    {
+      field: 'email',
+      method: 'isEmail',
+      validWhen: true,
+      message: 'Please enter a valid email address.',
+    },
+    {
+      field: 'password',
+      method: 'isEmpty',
+      validWhen: false,
+      message: 'Please enter a password'
+    }
+  ]);
+
 
   const errorDiv = error
     ? (
@@ -51,12 +73,18 @@ function SignIn(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.user.signIn('max@misterussell.com', 'NewUser1!').then(response => {
-      console.log('no error signing in');
-      props.user.setAuthenticated();
-    }).catch(error => {
-      setError(error.message);
-    });
+    const formState = { email, password };
+    const validation = formValidator.validate(formState);
+    if (validation.isValid) {
+      props.user.signIn('max@misterussell.com', 'NewUser1!').then(response => {
+        console.log('no error signing in');
+        props.user.setAuthenticated();
+      }).catch(error => {
+        setError(error.message);
+      });
+    } else {
+      // render the validatoin errors
+    }
   }
 
 }
