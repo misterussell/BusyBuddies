@@ -4,7 +4,7 @@ import FormValidator from '../models/FormValidator';
 function SignUp(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState([]);
   const [awaitConfirm, setAwaitConfirm] = useState(null);
   const [confirmationCode, setConfirmationCode] = useState('');
   const formValidator = new FormValidator([
@@ -28,7 +28,7 @@ function SignUp(props) {
     }
   ]);
 
-  const errorDiv = error
+  const errorDiv = error.length
     ? (
       <div className="sign-up-error">
         <p>{error}</p>
@@ -55,13 +55,14 @@ function SignUp(props) {
     const passwordField = awaitConfirm
       ? null
       : (
-        <div className="password">
+        <div className="sign-up password">
           <p>password:</p>
           <input
             value={password}
             onChange={handlePasswordChange}
             placeholder="password"
             label="password"
+            className="password-input"
           />
         </div>
       );
@@ -75,6 +76,7 @@ function SignUp(props) {
           onChange={handleEmailChange}
           placeholder="email"
           label="email"
+          className="email-input"
         />
         {
           passwordField
@@ -82,6 +84,7 @@ function SignUp(props) {
         <button
           onClick={handleSubmit}
           label="submit"
+          className="submit-button"
           >sign up</button>
           <button onClick={handleExistingCode}>I already have a code</button>
       </form>
@@ -110,7 +113,7 @@ function SignUp(props) {
     if (validation.isValid) {
       props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
         setAwaitConfirm(true);
-        setError(null);
+        setError([]);
       }).catch(error => {
         setError(error.message);
       });
