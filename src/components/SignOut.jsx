@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function SignOut(props) {
   props.user.signOut();
@@ -7,6 +8,10 @@ function SignOut(props) {
       You have been signed out.
     </div>
   );
+};
+
+SignOut.propTypes = {
+  user: PropTypes.object,
 };
 
 export default SignOut;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import FormValidator from '../models/FormValidator';
 
 function SignIn(props) {
@@ -88,5 +89,9 @@ function SignIn(props) {
   }
 
 }
+
+SignIn.propTypes = {
+  user: PropTypes.object,
+};
 
 export default SignIn;

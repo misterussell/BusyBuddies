@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the SignIn component renders SignIn component correctly 1`] = `
+<div
+  className="sign-in"
+>
+  <form>
+    <p>
+      email:
+    </p>
+    <input
+      label="email"
+      onChange={[Function]}
+      placeholder="email"
+      value=""
+    />
+    <p>
+      password:
+    </p>
+    <input
+      label="password"
+      onChange={[Function]}
+      placeholder="password"
+      value=""
+    />
+    <button
+      label="submit"
+      onClick={[Function]}
+    >
+      sign in
+    </button>
+  </form>
+</div>
+`;

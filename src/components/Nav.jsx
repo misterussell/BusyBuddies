@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function Nav(props) {
@@ -35,6 +36,10 @@ function Nav(props) {
       </ul>
     </div>
   );
+};
+
+Nav.propTypes = {
+  user: PropTypes.object,
 };
 
 export default Nav;

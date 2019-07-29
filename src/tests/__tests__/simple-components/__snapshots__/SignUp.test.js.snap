@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the SignUp component renders a SignUp component correctly 1`] = `
+<div
+  className="sign-up"
+>
+  <form>
+    <p>
+      email:
+    </p>
+    <input
+      className="email-input"
+      label="email"
+      onChange={[Function]}
+      placeholder="email"
+      value=""
+    />
+    <div
+      className="sign-up password"
+    >
+      <p>
+        password:
+      </p>
+      <input
+        className="password-input"
+        label="password"
+        onChange={[Function]}
+        placeholder="password"
+        value=""
+      />
+    </div>
+    <button
+      className="submit-button"
+      label="submit"
+      onClick={[Function]}
+    >
+      sign up
+    </button>
+    <button
+      onClick={[Function]}
+    >
+      I already have a code
+    </button>
+  </form>
+</div>
+`;

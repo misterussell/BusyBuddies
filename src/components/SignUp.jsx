@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import FormValidator from '../models/FormValidator';
 
 function SignUp(props) {
@@ -135,6 +136,10 @@ function SignUp(props) {
   function handleConfirmationCode(e) {
     setConfirmationCode(e.target.value);
   }
+};
+
+SignUp.propTypes = {
+  user: PropTypes.object,
 };
 
 export default SignUp;
