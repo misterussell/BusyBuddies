@@ -42,14 +42,14 @@ function SignUp(props) {
 
   const emailErrDiv = emailErr.isInvalid
     ? (
-      <div className="form-error">
+      <div className="form-field-error">
         <p>{ emailErr.message }</p>
       </div>
     ) : null;
 
   const passwordErrDiv = passwordErr.isInvalid
     ? (
-      <div className="form-error">
+      <div className="form-field-error">
         <p>{ passwordErr.message }</p>
       </div>
     ) : null;

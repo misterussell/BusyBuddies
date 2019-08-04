@@ -30,5 +30,10 @@ exports[`the SignIn component renders SignIn component correctly 1`] = `
       sign in
     </button>
   </form>
+  <div
+    className="sign-in-error"
+  >
+    
+  </div>
 </div>
 `;

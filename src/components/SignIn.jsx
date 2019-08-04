@@ -5,7 +5,18 @@ import FormValidator from '../models/FormValidator';
 function SignIn(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [signInErr, setSignInErr] = useState({
+    isInvalid: false,
+    message: '',
+  });
+  const [emailErr, setEmailErr] = useState({
+    isInvalid: false,
+    message: '',
+  });
+  const [passwordErr, setPasswordErr] = useState({
+    isInvalid: false,
+    message: '',
+  });
   const formValidator = new FormValidator([
     {
       field: 'email',
@@ -27,11 +38,24 @@ function SignIn(props) {
     }
   ]);
 
+  const emailErrDiv = emailErr.isInvalid
+    ? (
+      <div className="form-field-error">
+        <p>{ emailErr.message }</p>
+      </div>
+    ) : null;
 
-  const errorDiv = error
+  const passwordErrDiv = passwordErr.isInvalid
+    ? (
+      <div className="form-field-error">
+        <p>{ passwordErr.message }</p>
+      </div>
+    ) : null;
+
+  const signInErrDiv = signInErr
     ? (
       <div className="sign-in-error">
-        { error }
+        { signInErr.message }
       </div>
     )
     : null;
@@ -46,6 +70,9 @@ function SignIn(props) {
           placeholder="email"
           label="email"
         />
+        {
+          emailErrDiv
+        }
         <p>password:</p>
         <input
           value={password}
@@ -53,13 +80,16 @@ function SignIn(props) {
           placeholder="password"
           label="password"
         />
+        {
+          passwordErrDiv
+        }
         <button
           onClick={handleSubmit}
           label="submit"
           >sign in</button>
       </form>
       {
-        errorDiv
+        signInErrDiv
       }
     </div>
   );
@@ -81,13 +111,19 @@ function SignIn(props) {
         console.log('no error signing in');
         props.user.setAuthenticated();
       }).catch(error => {
-        setError(error.message);
+        setSignInErr({isInvalid: true, message: error.message});
       });
     } else {
-      // render the validatoin errors
+      // - render the validation errors
+      // - validatoin.isValid will be false when these errors need to be thrown
+      // - form validated errors they stored as keys in the validation object
+      // - confirmatoin errors returned from Amazon are stored in the confirmationErr object
+      // - first iterate over the form validation errors as these are going to be thrown before the
+      // cognito error
+      if (validation.email.isInvalid) setEmailErr(validation.email);
+      if (validation.password.isInvalid) setPasswordErr(validation.password);
     }
   }
-
 }
 
 SignIn.propTypes = {
