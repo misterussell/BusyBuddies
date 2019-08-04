@@ -15,12 +15,15 @@ describe('the FormValidator class', () => {
     expect(formValidator.validations).toEqual([rule1, rule2, rule3]);
     expect(() => {
       const badArgsValidator = new FormValidator(null);
+      return badArgsValidator;
     }).toThrow();
     expect(() => {
       const badArgsValidator = new FormValidator('foo, bar');
+      return badArgsValidator
     }).toThrow();
     expect(() => {
       const correctArgsValidator = new FormValidator([rule1, rule2, rule3]);
+      return correctArgsValidator;
     }).not.toThrow();
   });
 
