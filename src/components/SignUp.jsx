@@ -5,7 +5,18 @@ import FormValidator from '../models/FormValidator';
 function SignUp(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState([]);
+  const [confirmationErr, setConfirmationErr] = useState({
+    isInvalid: false,
+    message: '',
+  });
+  const [emailErr, setEmailErr] = useState({
+    isInavlid: false,
+    message: '',
+  });
+  const [passwordErr, setPasswordErr] = useState({
+    isInvalid: false,
+    message: '',
+  });
   const [awaitConfirm, setAwaitConfirm] = useState(null);
   const [confirmationCode, setConfirmationCode] = useState('');
   const formValidator = new FormValidator([
@@ -29,13 +40,26 @@ function SignUp(props) {
     }
   ]);
 
-  const errorDiv = error.length
+  const emailErrDiv = emailErr.isInvalid
+    ? (
+      <div className="form-error">
+        <p>{ emailErr.message }</p>
+      </div>
+    ) : null;
+
+  const passwordErrDiv = passwordErr.isInvalid
+    ? (
+      <div className="form-error">
+        <p>{ passwordErr.message }</p>
+      </div>
+    ) : null;
+
+  const confirmationErrDiv = confirmationErr.isInvalid
     ? (
       <div className="sign-up-error">
-        <p>{error}</p>
+        <p>{ confirmationErr.message }</p>
       </div>
-    )
-    : null;
+    ) : null;
 
   const confirmDiv = awaitConfirm
     ? (
@@ -50,8 +74,7 @@ function SignUp(props) {
         />
         <button onClick={handleConfirm}>confirm</button>
       </div>
-    )
-    : null;
+    ) : null;
 
     const passwordField = awaitConfirm
       ? null
@@ -80,7 +103,19 @@ function SignUp(props) {
           className="email-input"
         />
         {
+          // if there is a form validatoin error for the email field
+          // render a div under the email field with the error message
+          emailErrDiv
+        }
+        {
+          // the password field is only shown while no confirmation code has been
+          // requested
           passwordField
+        }
+        {
+          // if there a form validatoin error for the password field
+          // render a div under the password field with the error message
+          passwordErrDiv
         }
         <button
           onClick={handleSubmit}
@@ -90,7 +125,7 @@ function SignUp(props) {
           <button onClick={handleExistingCode}>I already have a code</button>
       </form>
       {
-        errorDiv
+        confirmationErrDiv
       }
       {
         confirmDiv
@@ -110,16 +145,31 @@ function SignUp(props) {
   function handleSubmit(e) {
     e.preventDefault();
     const formState = { email, password };
-    const validation = formValidator(formState);
+    const validation = formValidator.validate(formState);
     if (validation.isValid) {
-      props.user.signUp('max@misterussell.com', 'NewUser1!').then(response => {
+      props.user.signUp('max@misterussell.com', 'NewUser1!')
+       .then(response => {
         setAwaitConfirm(true);
-        setError([]);
-      }).catch(error => {
-        setError(error.message);
+        setConfirmationErr({
+          isInvalid: false,
+          message: '',
+        });
+      }).catch((err) => {
+        console.log(err);
+        setConfirmationErr({
+          isInvalid: true,
+          message: err.message
+        });
       });
     } else {
-      // render the validation errors
+      // - render the validation errors
+      // - validatoin.isValid will be false when these errors need to be thrown
+      // - form validated errors they stored as keys in the validation object
+      // - confirmatoin errors returned from Amazon are stored in the confirmationErr object
+      // - first iterate over the form validation errors as these are going to be thrown before the
+      // cognito error
+      if (validation.email.isInvalid) setEmailErr({ isInvalid: true, message: validation.email.message });
+      if (validation.password.isInvalid) setPasswordErr({ isInvalid: true, message: validation.password.message });
     }
   }
 

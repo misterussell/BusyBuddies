@@ -33,7 +33,12 @@ export default class User {
     return new Promise((resolve, reject) => {
       if (email && password) {
         this.userPool.signUp(email, password, attributeList, null, (err, result) => {
+          // .signUp throws an error before returning the promise if the user
+          // is already confirmed.
+          // the following code is unreachable. need to confirm the user isn't
+          // alredy confirmed before allowing the signUp method to be called
           if (err) {
+            console.log(err);
             reject(err);
           } else resolve(result.user);
         });

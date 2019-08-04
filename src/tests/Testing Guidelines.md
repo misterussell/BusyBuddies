@@ -9,7 +9,7 @@
   - Third-party libraries
   - Constants
   - Inline Styles
-  - Nested component tests: simple components within complex components will only be tested at their own component level
+  - Nested components: simple components within complex components will only be tested at the own component level
 
 - Main testing process:
   - One snapshot per component
