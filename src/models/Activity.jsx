@@ -4,7 +4,7 @@ export default class Activity {
     todo: provision a SQL db for these
     MVP structure for an event:
       {
-        id: unique ID,
+        id: unique ID, (ids generated with a library)
         calendarID: unique ID referencing the Calendar the activity is saved to, (defaults to a general calendar)
         title: str,
         description: str,
@@ -19,4 +19,8 @@ export default class Activity {
         tags: arr, (no more than 5 tags can be added to an activity, these are SQl db entries so can be shared between activities)
       }
   */
+  constructor(calendarID) {
+    this.calendarID = calendarID;
+
+  }
 }
