@@ -9,6 +9,7 @@ const user = new User();
 
 beforeEach(() => {
   const div = document.createElement('div');
+  
   ReactDOM.render(<SignUp user={ user }/>, div);
   ReactDOM.unmountComponentAtNode(div);
 });
@@ -17,12 +18,14 @@ describe('the SignUp component', () => {
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
+
     ReactDOM.render(<SignUp user={ user }/>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   it('renders a SignUp component correctly', () => {
     const SignUpComponent = renderer.create(<SignUp user={ user }/>).toJSON();
+
     expect(SignUpComponent).toMatchSnapshot();
   });
 

@@ -27,6 +27,7 @@ describe('the User class', () => {
       Authentication checks happen at the app load level by the main routing Component.
     */
     const user = new User();
+
     expect(user.isAuthenticated).toBe(false);
   });
 
@@ -43,6 +44,7 @@ describe('the User class', () => {
     */
     // AWSMock.mock('CognitoIdentityServiceProvider.CognitoUserPool', 'signUp', function(params, cb) { cb(null) });
     const user = new User();
+
     user.signUp(email, password).then(data => expect(data).toEqual(response))
                                 .catch(err => err);
   });
@@ -52,6 +54,7 @@ describe('the User class', () => {
       if the promise is rejected an error object should be returned to the consumer
     */
     const user = new User();
+
     expect(user.signUp(false)).rejects.toEqual({
       error: 'User not signed up. Email and password required.'
     });
@@ -69,6 +72,7 @@ describe('the User class', () => {
 
   it('should return an error if the confirm method receives invalid args', () => {
     const user = new User();
+
     expect(user.confirm(false)).rejects.toEqual({
       error: 'User not confirmed. Email and code required.'
     });
@@ -97,6 +101,7 @@ describe('the User class', () => {
         }
     */
     const user = new User();
+    
     expect(user.signIn(false)).rejects.toEqual({
       error: 'User not signed in. Email and password required.'
     });
